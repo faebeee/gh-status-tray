@@ -1,0 +1,46 @@
+import { IWorkflowStatusEntry } from "@shared/types/IWorkflowStatusEntry";
+import { OctokitService } from './OctokitService'
+import { TrayService } from "./TrayService";
+
+export class GithubWorkflowService {
+  private api: OctokitService
+
+  constructor() {
+    this.api = OctokitService.getInstance()
+  }
+
+  private async getListOfWorkflows(owner:string, repo:string) {
+    const { data } = await this.api.getApi().rest.actions.listWorkflowRunsForRepo({
+      owner,
+      repo
+    })
+
+    return data.workflow_runs
+  }
+
+  public async getWorkflowRunsForRepo(owner:string, repo:string):Promise<IWorkflowStatusEntry[]> {
+    const result = await this.getListOfWorkflows(owner, repo);
+    const latestCommitId = result[0].head_commit!.id;
+    const runsForCommit = result.filter((run) => run.head_commit!.id === latestCommitId);
+
+    if(runsForCommit.some(run => run.conclusion === 'failure')) {
+      TrayService.getInstance().setAlert(true);
+    }
+
+    return runsForCommit
+    .filter(run => run.status === 'completed').map(
+      (run) =>
+        ({
+          name: run.name ?? "K/A",
+          description: run.display_title ?? "K/A",
+          id: run.id,
+          repo: run.repository.full_name,
+          conclusion: run.conclusion ?? "K/A",
+          status: run.status ?? "K/A",
+          url: run.html_url,
+          createdAt: run.created_at,
+          updatedAt: run.updated_at,
+        })
+    );
+  }
+}

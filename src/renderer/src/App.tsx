@@ -1,11 +1,12 @@
-import { Button } from './components/ui/button'
+import { WorkflowList } from "@renderer/components/WorkflowList";
 
-function App(): React.JSX.Element {
+export const App = () => {
+
   return (
-    <>
-      <Button>Hello</Button>
-    </>
-  )
-}
-
-export default App
+    <div className={"p-4 flex flex-col gap-4"}>
+      <WorkflowList owner={"Konova-Ag"} repo={"emi-app"} />
+      {/*<WorkflowList owner={"Konova-Ag"} repo={"emi-ui"} />*/}
+      {/*<WorkflowList owner={"Konova-Ag"} repo={"emi-api"} />*/}
+    </div>
+  );
+};
