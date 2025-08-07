@@ -1,6 +1,6 @@
 import { app, Menu, nativeImage, Tray } from "electron";
-import errorIcon from "../../assets/error.png?asset";
-import okIcon from "../../assets/ok.png?asset";
+import errorIcon from "../../../assets/error.png?asset";
+import okIcon from "../../../assets/ok.png?asset";
 
 export class TrayService {
   private static instance: TrayService;

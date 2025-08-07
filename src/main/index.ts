@@ -3,7 +3,7 @@ import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
-import { AppController } from "./src/AppController";
+import { AppController } from "./src/controller/AppController";
 
 function createWindow(): void {
   // Create the browser window.
