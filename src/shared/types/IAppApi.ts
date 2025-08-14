@@ -1,7 +1,16 @@
-import { AppController } from '../../main/src/controller/AppController'
+import { IWorkflowStatusEntry } from "./IWorkflowStatusEntry";
+import { Repository } from "./Repository";
 
-export type IAppApi = {
-  checkWorkflow: AppController['checkWorkflow']
-  addWorkflow: AppController['addWorkflow']
-  removeWorkflow: AppController['removeWorkflow']
+export interface IAppApi {
+  getAuthStatus(): Promise<boolean>;
+
+  getRepositories(): Promise<Repository[]>;
+
+  addRepository(repo: Repository): Promise<void>;
+
+  removeRepository(repo: Repository): Promise<void>;
+
+  getWorkflowStatus(repo: Repository): Promise<IWorkflowStatusEntry[]>;
+
+  openAuthUrl(): Promise<void>;
 }

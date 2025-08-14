@@ -3,9 +3,6 @@ import storage from "electron-json-storage";
 export class StoreService {
   private static instance: StoreService;
 
-  private constructor() {
-  }
-
   put(key: string, model: object): Promise<void> {
     return new Promise((resolve, reject) => {
       storage.set(key, model, (error) => {

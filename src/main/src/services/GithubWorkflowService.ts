@@ -1,6 +1,5 @@
 import { IWorkflowStatusEntry } from "@shared/types/IWorkflowStatusEntry";
 import { OctokitService } from "./OctokitService";
-import { StoreService } from "./StoreService";
 import { TrayService } from "./TrayService";
 
 export class GithubWorkflowService {
@@ -28,8 +27,7 @@ export class GithubWorkflowService {
       TrayService.getInstance().setAlert(true);
     }
 
-    return runsForCommit
-    .filter(run => run.status === "completed").map(
+    return runsForCommit.map(
       (run) =>
         ({
           name: run.name ?? "K/A",
@@ -45,11 +43,11 @@ export class GithubWorkflowService {
     );
   }
 
-  public addNewWorkflow(owner: string, repo: string): void {
-    StoreService.getInstance().put({ owner, repo });
+  public async addNewWorkflow(owner: string, repo: string): void {
+    //   @Todo implement functionality to store owner and repo into a local json file
   }
 
   public removeWorkflow(owner: string, repo: string) {
-    return StoreService.getInstance().remove({ owner, repo });
+
   }
 }
