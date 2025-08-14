@@ -7,10 +7,9 @@ export class AuthService {
     this.storeService = StoreService.getInstance();
   }
 
-  isAuthenticated() {
+  async isAuthenticated() {
     try {
-      this.storeService.get("github-pat");
-      return true;
+      return await this.storeService.has("github-pat");
     } catch (e) {
       console.error(e);
       return false;

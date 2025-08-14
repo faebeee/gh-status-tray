@@ -25,6 +25,18 @@ export class StoreService {
     });
   }
 
+
+  has(key: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      storage.has(key, (error, hasKey) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(hasKey);
+      });
+    });
+  }
+
   remove(key: string): Promise<void> {
     return new Promise((resolve, reject) => {
       storage.remove(key, (error) => {

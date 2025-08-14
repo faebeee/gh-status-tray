@@ -5,6 +5,8 @@ import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
 import { AppController } from "./src/controller/AppController";
 
+const mainApp = new AppController()
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -44,7 +46,6 @@ app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
-  const mainApp = new AppController()
   mainApp.start()
 
   // Default open or close DevTools by F12 in development
@@ -69,6 +70,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
+    mainApp.stop();
   }
 })
 
