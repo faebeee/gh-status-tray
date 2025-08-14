@@ -12,15 +12,20 @@ export class AppController {
   private readonly authService = new AuthService();
   private fetcher: StatusFetcher | null = null;
 
-  async start(): void {
+  async start() {
     TrayService.getInstance().setAlert(false);
     console.log(await this.authService.isAuthenticated());
 
 
-    this.authService.on('on-verified', (data) => {
-      console.log("on-verified", data);
+    this.authService.on("on-verified", (data) => {
       BrowserWindow.getAllWindows().forEach((win) => {
         win.webContents.send("on-verification-uri", data);
+      });
+    });
+
+    this.authService.on("auth-success", (data) => {
+      BrowserWindow.getAllWindows().forEach((win) => {
+        win.webContents.send("on-auth-success", data);
       });
     });
 

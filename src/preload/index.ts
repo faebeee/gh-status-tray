@@ -7,6 +7,7 @@ import { Events } from "./events";
 const api: IAppApi = {
   getAuthStatus: () => ipcRenderer.invoke(Events.getAuthStatus),
   startDeviceFlow: () => ipcRenderer.invoke('start-device-flow'),
+  onAuthSuccess: (callback) => ipcRenderer.on('on-auth-success', () => callback()),
   onVerificationUri: (callback) => ipcRenderer.on('on-verification-uri', (_event, data) => callback(data)),
   getRepositories: () => ipcRenderer.invoke('get-repositories'),
   addRepository: (repo) => ipcRenderer.invoke('add-repository', repo),

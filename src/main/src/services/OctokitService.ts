@@ -1,18 +1,24 @@
 import { Octokit } from "@octokit/rest";
-import { StoreService } from "./StoreService";
+import keytar from "keytar";
 
 export class OctokitService {
   private static instance: OctokitService;
-  private readonly appOctokit: Octokit;
-  private readonly storeService = StoreService.getInstance();
+  private appOctokit: Octokit | null = null;
 
   private constructor() {
-    this.appOctokit = new Octokit({
-      auth: this.storeService.get("github-pat"),
+    keytar.getPassword("github", "gh-status-tray")
+    .then((pass) => {
+      if (!pass) throw new Error(
+        "No token found. Please run the device flow to generate a token."
+      );
+      this.appOctokit = new Octokit({
+        auth: pass
+      });
     });
+
   }
 
-  getApi(): Octokit {
+  getApi() {
     return this.appOctokit;
   }
 
