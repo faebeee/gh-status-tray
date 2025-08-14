@@ -6,7 +6,8 @@ import { Events } from "./events";
 // Custom APIs for renderer
 const api: IAppApi = {
   getAuthStatus: () => ipcRenderer.invoke(Events.getAuthStatus),
-  openAuthUrl: () => ipcRenderer.invoke('open-auth-url'),
+  startDeviceFlow: () => ipcRenderer.invoke('start-device-flow'),
+  onVerificationUri: (callback) => ipcRenderer.on('on-verification-uri', (_event, data) => callback(data)),
   getRepositories: () => ipcRenderer.invoke('get-repositories'),
   addRepository: (repo) => ipcRenderer.invoke('add-repository', repo),
   removeRepository: (repo) => ipcRenderer.invoke(Events.removeRepository, repo),

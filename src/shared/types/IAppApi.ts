@@ -12,5 +12,7 @@ export interface IAppApi {
 
   getWorkflowStatus(repo: Repository): Promise<IWorkflowStatusEntry[]>;
 
-  openAuthUrl(): Promise<void>;
+  startDeviceFlow(): Promise<void>;
+
+  onVerificationUri(callback: (data: { verification_uri: string, user_code: string }) => void): void;
 }

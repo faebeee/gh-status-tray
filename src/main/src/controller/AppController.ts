@@ -1,5 +1,5 @@
 import { Repository } from "@shared/types/Repository";
-import { ipcMain } from "electron";
+import { BrowserWindow, ipcMain } from "electron";
 import { Events } from "../../../preload/events";
 import { AuthService } from "../services/AuthService";
 import { GithubWorkflowService } from "../services/GithubWorkflowService";
@@ -13,17 +13,23 @@ export class AppController {
   private fetcher: StatusFetcher | null = null;
 
   async start(): void {
-
     TrayService.getInstance().setAlert(false);
     console.log(await this.authService.isAuthenticated());
 
+
+    this.authService.on('on-verified', (data) => {
+      console.log("on-verified", data);
+      BrowserWindow.getAllWindows().forEach((win) => {
+        win.webContents.send("on-verification-uri", data);
+      });
+    });
 
     ipcMain.handle(Events.getAuthStatus, () => {
       return this.authService.isAuthenticated();
     });
 
-    ipcMain.handle("open-auth-url", () => {
-      return this.authService.openAuthUrl();
+    ipcMain.handle("start-device-flow", () => {
+      return this.authService.startDeviceFlow();
     });
 
     if (await this.authService.isAuthenticated()) {
