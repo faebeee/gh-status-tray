@@ -33,6 +33,11 @@ export class TrayService {
     // This method will create the Menu for the tray
     const contextMenu = Menu.buildFromTemplate([
       {
+        label: "Open",
+        type: "normal",
+        click: () => app.emit("activate")
+      },
+      {
         label: "Quit",
         type: "normal",
         click: () => app.quit()
