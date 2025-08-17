@@ -1,3 +1,4 @@
+import { Footer } from "@renderer/components/Footer";
 import { Button } from "@renderer/components/ui/button";
 import React from "react";
 import { RepositoryList } from "./components/repositories/RepositoryList";
@@ -39,6 +40,7 @@ export const App = () => {
           )}
         </div>
       )}
+      <Footer/>
     </div>
   );
 };

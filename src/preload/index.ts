@@ -13,6 +13,7 @@ const api: IAppApi = {
   addRepository: (repo) => ipcRenderer.invoke('add-repository', repo),
   removeRepository: (repo) => ipcRenderer.invoke(Events.removeRepository, repo),
   getWorkflowStatus: (repo) => ipcRenderer.invoke(Events.getWorkflowStatus, repo),
+  getBuildTime: () => ipcRenderer.invoke(Events.getBuildTime),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

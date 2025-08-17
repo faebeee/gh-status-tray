@@ -42,12 +42,4 @@ export class GithubWorkflowService {
         })
     );
   }
-
-  public async addNewWorkflow(owner: string, repo: string): void {
-    //   @Todo implement functionality to store owner and repo into a local json file
-  }
-
-  public removeWorkflow(owner: string, repo: string) {
-
-  }
 }

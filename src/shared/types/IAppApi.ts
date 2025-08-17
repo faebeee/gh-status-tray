@@ -17,4 +17,6 @@ export interface IAppApi {
   onAuthSuccess(callback: () => void): void;
 
   onVerificationUri(callback: (data: { verification_uri: string, user_code: string }) => void): void;
+
+  getBuildTime(): Promise<{ buildTime:string, resourcePath:string }>;
 }

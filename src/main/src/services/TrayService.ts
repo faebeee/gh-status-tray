@@ -1,6 +1,6 @@
 import { app, Menu, nativeImage, Tray } from "electron";
-import errorIcon from "../../../assets/error.png?asset";
-import okIcon from "../../../assets/ok.png?asset";
+import path from "node:path";
+import { ResourceService } from "./ResourceService";
 
 export class TrayService {
   private static instance: TrayService;
@@ -18,7 +18,9 @@ export class TrayService {
   }
 
   public async setAlert(active: boolean) {
-    const image = await nativeImage.createThumbnailFromPath(active ? errorIcon : okIcon, { width: 16, height: 16 });
+    const icon = active ? path.join(ResourceService.getResourcesPath(), "error.png") : path.join(ResourceService.getResourcesPath(), "ok.png");
+
+    const image = await nativeImage.createThumbnailFromPath(icon, { width: 16, height: 16 });
     if (this.tray) {
       this.tray.destroy();
     }

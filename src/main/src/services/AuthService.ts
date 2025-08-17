@@ -37,7 +37,6 @@ export class AuthService extends EventEmitter {
       type: "oauth"
     });
 
-    console.log(tokenAuthentication);
     if (tokenAuthentication) {
       await keytar.setPassword("github", "gh-status-tray", tokenAuthentication.token);
       this.emit("auth-success");

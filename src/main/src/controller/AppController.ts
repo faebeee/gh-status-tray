@@ -1,8 +1,9 @@
 import { Repository } from "@shared/types/Repository";
-import { BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { Events } from "../../../preload/events";
 import { AuthService } from "../services/AuthService";
 import { GithubWorkflowService } from "../services/GithubWorkflowService";
+import { MetaService } from "../services/MetaService";
 import { RepositoryService } from "../services/RepositoryService";
 import { StatusFetcher } from "../services/StatusFetcher";
 import { StoreService } from "../services/StoreService";
@@ -10,6 +11,7 @@ import { TrayService } from "../services/TrayService";
 
 export class AppController {
   private readonly authService = new AuthService();
+  private readonly metaService = new MetaService();
   private fetcher: StatusFetcher | null = null;
 
   async start() {
@@ -27,6 +29,13 @@ export class AppController {
       BrowserWindow.getAllWindows().forEach((win) => {
         win.webContents.send("on-auth-success", data);
       });
+    });
+
+    ipcMain.handle(Events.getBuildTime, async () => {
+      return {
+        buildTime: await this.metaService.getBuildLogText(),
+        resourcePath: process.resourcesPath,
+      };
     });
 
     ipcMain.handle(Events.getAuthStatus, () => {

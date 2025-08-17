@@ -49,7 +49,6 @@ export class StatusFetcher {
       const status = await this.workflowService.getWorkflowRunsForRepo(repo.owner, repo.repo);
       const hasFailed = status.some(run => run.conclusion === "failure");
       const newStatus = hasFailed ? "failed" : "success";
-      console.log(`Workflow for ${repo.repo} has ${newStatus}`);
 
       const repoIndex = this.statuses.findIndex(
         (item) => item.repo === repo.repo && item.owner === repo.owner
@@ -59,6 +58,7 @@ export class StatusFetcher {
           //   show toast
           new Notification({
             title: "Github Workflow",
+            urgency: newStatus === "failed" ? "critical" : "normal",
             body: `Workflow for ${repo.repo} has ${newStatus}`
           }).show();
         }
