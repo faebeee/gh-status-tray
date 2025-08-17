@@ -10,6 +10,8 @@ export class GithubWorkflowService {
   }
 
   private async getListOfWorkflows(owner: string, repo: string) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { data } = await this.api.getApi().rest.actions.listWorkflowRunsForRepo({
       owner,
       repo

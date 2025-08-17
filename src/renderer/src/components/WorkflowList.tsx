@@ -1,7 +1,7 @@
 import { Button } from "@renderer/components/ui/button";
 import { WorkflowEntry } from "@renderer/components/WorkflowEntry";
 import { IWorkflowStatusEntry } from "@shared/types/IWorkflowStatusEntry";
-import { Trash, TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { FC, Fragment, useEffect, useState } from "react";
 import { useInterval } from "react-use";
 import { Separator } from "./ui/separator";
@@ -31,10 +31,10 @@ export const WorkflowList: FC<WorkflowListProps> = ({ owner, repo, onDelete }) =
   return (
     <div className={"border p-4 rounded-sm"}>
       <div className="p-4">
-        <div className={'flex flex-row justify-between mb-4'}>
+        <div className={"flex flex-row justify-between mb-4"}>
           <h2 className="mb-4 text-2xl text-foreground leading-none font-medium">{owner}/{repo}</h2>
           {onDelete && <Button onClick={onDelete}>
-            <TrashIcon/>
+            <TrashIcon />
           </Button>}
         </div>
         {workflows.map((workflow) => (

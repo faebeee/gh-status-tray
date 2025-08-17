@@ -1,5 +1,5 @@
 import { Repository } from "@shared/types/Repository";
-import { app, BrowserWindow, ipcMain } from "electron";
+import { BrowserWindow, ipcMain } from "electron";
 import { Events } from "../../../preload/events";
 import { AuthService } from "../services/AuthService";
 import { GithubWorkflowService } from "../services/GithubWorkflowService";
@@ -34,7 +34,7 @@ export class AppController {
     ipcMain.handle(Events.getBuildTime, async () => {
       return {
         buildTime: await this.metaService.getBuildLogText(),
-        resourcePath: process.resourcesPath,
+        resourcePath: process.resourcesPath
       };
     });
 
