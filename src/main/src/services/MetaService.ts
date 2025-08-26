@@ -1,5 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { version } from "../../../../package.json";
 import { ResourceService } from "./ResourceService";
 
 /**
@@ -36,5 +37,9 @@ export class MetaService {
     const text = await this.getBuildLogText();
     // Normalize line endings and split
     return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
+  }
+
+  async getVersion():Promise<string> {
+    return version;
   }
 }

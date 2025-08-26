@@ -16,8 +16,6 @@ export class AppController {
 
   async start() {
     TrayService.getInstance().setAlert(false);
-    console.log(await this.authService.isAuthenticated());
-
 
     this.authService.on("on-verified", (data) => {
       BrowserWindow.getAllWindows().forEach((win) => {
@@ -34,12 +32,17 @@ export class AppController {
     ipcMain.handle(Events.getBuildTime, async () => {
       return {
         buildTime: await this.metaService.getBuildLogText(),
-        resourcePath: process.resourcesPath
+        resourcePath: process.resourcesPath,
+        version: await this.metaService.getVersion()
       };
     });
 
     ipcMain.handle(Events.getAuthStatus, () => {
       return this.authService.isAuthenticated();
+    });
+
+    ipcMain.handle(Events.closeApp, () => {
+      BrowserWindow.getFocusedWindow()?.close()
     });
 
     ipcMain.handle("start-device-flow", () => {

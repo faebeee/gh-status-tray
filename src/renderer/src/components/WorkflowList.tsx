@@ -33,16 +33,17 @@ export const WorkflowList: FC<WorkflowListProps> = ({ owner, repo, onDelete }) =
       <div className="p-4">
         <div className={"flex flex-row justify-between mb-4"}>
           <h2 className="mb-4 text-2xl text-foreground leading-none font-medium">{owner}/{repo}</h2>
-          {onDelete && <Button onClick={onDelete}>
+          {onDelete && <Button onClick={onDelete} className={'text-destructive'} variant={'ghost'}>
             <TrashIcon />
           </Button>}
         </div>
-        {workflows.map((workflow) => (
-          <Fragment key={workflow.id}>
-            <WorkflowEntry workflow={workflow} />
-            <Separator className="my-2" />
-          </Fragment>
-        ))}
+        <div className={'flex flex-col gap-2'}>
+          {workflows.map((workflow) => (
+            <Fragment key={workflow.id}>
+              <WorkflowEntry workflow={workflow} />
+            </Fragment>
+          ))}
+        </div>
       </div>
     </div>
   );

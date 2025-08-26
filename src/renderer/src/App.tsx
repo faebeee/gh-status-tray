@@ -1,4 +1,5 @@
 import { Footer } from "@renderer/components/Footer";
+import { Header } from "@renderer/components/Header";
 import { Button } from "@renderer/components/ui/button";
 import React from "react";
 import { RepositoryList } from "./components/repositories/RepositoryList";
@@ -23,6 +24,7 @@ export const App = () => {
 
   return (
     <div className={"p-4 flex flex-col gap-4"}>
+      <Header/>
       {isAuthenticated ? (
         <RepositoryList />
       ) : (

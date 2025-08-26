@@ -31,7 +31,7 @@ export const RepositoryList = () => {
       <h2 className="text-lg font-semibold">Repositories</h2>
       <Separator className="my-4" />
       <AddRepositoryForm onAddRepository={handleAddRepository} />
-      <ul className="mt-4">
+      <ul className="mt-4 flex flex-col gap-4">
         {repositories.map((repo) => (
           <WorkflowList owner={repo.owner} repo={repo.repo} key={`${repo.owner}/${repo.repo}`}
             onDelete={() => handleRemoveRepository(repo)} />

@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 
 export const Footer = () => {
   const [buildTime, setBuildTime] = useState("");
+  const [version, setVersion] = useState("");
 
   const load = async () => {
-    const { buildTime: _buildTime } = await window.app.getBuildTime();
+    const { buildTime: _buildTime, version } = await window.app.getBuildTime();
     setBuildTime(_buildTime);
+    setVersion(version)
   };
 
   useEffect(() => {
@@ -14,5 +16,6 @@ export const Footer = () => {
 
   return <footer>
     <span className={"text-sm text-muted-foreground"}>Build: {buildTime}</span>
+    <span className={"text-sm text-muted-foreground"}>Version: {version}</span>
   </footer>;
 };

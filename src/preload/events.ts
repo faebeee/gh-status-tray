@@ -3,4 +3,5 @@ export enum Events {
   getWorkflowStatus='get-workflow-status',
   getAuthStatus='get-auth-status',
   getBuildTime='get-build-time',
+  closeApp='app-close',
 }

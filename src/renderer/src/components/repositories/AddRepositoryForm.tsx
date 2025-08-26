@@ -29,7 +29,7 @@ export const AddRepositoryForm = ({ onAddRepository }) => {
         value={repo}
         onChange={(e) => setRepo(e.target.value)}
       />
-      <Button type="submit">Add</Button>
+      <Button type="submit" variant={'outline'} className={'curstor-pointer'}>Add</Button>
     </form>
   );
 };
