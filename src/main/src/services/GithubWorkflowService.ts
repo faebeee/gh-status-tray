@@ -32,6 +32,8 @@ export class GithubWorkflowService {
           description: run.display_title ?? "K/A",
           id: run.id,
           repo: run.repository.full_name,
+          event: run.event,
+          branch: run.head_branch,
           conclusion: run.conclusion ?? "K/A",
           status: run.status ?? "K/A",
           url: run.html_url,

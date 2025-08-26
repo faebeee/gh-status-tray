@@ -1,6 +1,7 @@
 import { IWorkflowStatusEntry } from "@shared/types/IWorkflowStatusEntry";
 import { AlertTriangle, Check, Hourglass } from "lucide-react";
 import { useMemo } from "react";
+import { Badge } from "./ui/badge";
 
 export const WorkflowEntry = ({ workflow }: { workflow: IWorkflowStatusEntry }) => {
   const statusColor = useMemo(() => {
@@ -26,7 +27,6 @@ export const WorkflowEntry = ({ workflow }: { workflow: IWorkflowStatusEntry }) 
         <div className="text-lg">
           {workflow.name}
         </div>
-
         <div className="text-sm">
           {new Date(workflow.createdAt).toLocaleString()}
         </div>
@@ -36,7 +36,15 @@ export const WorkflowEntry = ({ workflow }: { workflow: IWorkflowStatusEntry }) 
         {workflow.description}
       </div>
 
+      <div className={'flex flex-row gap-1 mt-2'}>
+      <Badge variant={'outline'}>
+        Event: {workflow.event}
+      </Badge>
 
+      <Badge variant={'outline'}>
+        Branch: {workflow.branch}
+      </Badge>
+      </div>
     </a>
   </div>;
 };

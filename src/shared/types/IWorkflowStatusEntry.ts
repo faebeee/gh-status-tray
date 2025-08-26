@@ -8,4 +8,6 @@ export type IWorkflowStatusEntry = {
   url: string;
   createdAt: string;
   updatedAt: string;
+  event: string;
+  branch: string
 }
