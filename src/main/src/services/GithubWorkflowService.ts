@@ -25,10 +25,6 @@ export class GithubWorkflowService {
     const latestCommitId = result[0].head_commit!.id;
     const runsForCommit = result.filter((run) => run.head_commit!.id === latestCommitId);
 
-    if (runsForCommit.some(run => run.conclusion === "failure")) {
-      TrayService.getInstance().setAlert(true);
-    }
-
     return runsForCommit.map(
       (run) =>
         ({

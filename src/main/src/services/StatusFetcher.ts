@@ -2,6 +2,7 @@ import { Notification } from "electron";
 import { GithubWorkflowService } from "./GithubWorkflowService";
 import { RepositoryService } from "./RepositoryService";
 import { StoreService } from "./StoreService";
+import { TrayService } from "./TrayService";
 
 export type RepoStatus = {
   repo: string;
@@ -42,13 +43,17 @@ export class StatusFetcher {
   }
 
   async check() {
-    console.log("Checking status");
     const repos = await this.repoService.getRepositories();
+
+    let hasFailedRun = false;
 
     for (const repo of repos) {
       const status = await this.workflowService.getWorkflowRunsForRepo(repo.owner, repo.repo);
       const hasFailed = status.some(run => run.conclusion === "failure");
       const newStatus = hasFailed ? "failed" : "success";
+      if (hasFailed) {
+        hasFailedRun = true;
+      }
 
       const repoIndex = this.statuses.findIndex(
         (item) => item.repo === repo.repo && item.owner === repo.owner
@@ -57,7 +62,7 @@ export class StatusFetcher {
         if (this.statuses[repoIndex].status !== newStatus) {
           //   show toast
           new Notification({
-            title: "Github Workflow",
+            title: repo.repo,
             urgency: newStatus === "failed" ? "critical" : "normal",
             body: `Workflow for ${repo.repo} has ${newStatus}`
           }).show();
@@ -65,5 +70,6 @@ export class StatusFetcher {
         this.statuses[repoIndex].status = newStatus;
       }
     }
+    TrayService.getInstance().setAlert(hasFailedRun);
   }
 }
