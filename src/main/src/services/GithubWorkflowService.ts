@@ -38,7 +38,11 @@ export class GithubWorkflowService {
           status: run.status ?? "K/A",
           url: run.html_url,
           createdAt: run.created_at,
-          updatedAt: run.updated_at
+          updatedAt: run.updated_at,
+          actor: {
+            name: run.triggering_actor?.login ?? 'K / A',
+            avatar: run.triggering_actor?.avatar_url ?? 'K / A'
+          }
         })
     );
   }

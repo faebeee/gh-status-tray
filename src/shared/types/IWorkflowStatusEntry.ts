@@ -9,5 +9,9 @@ export type IWorkflowStatusEntry = {
   createdAt: string;
   updatedAt: string;
   event: string;
-  branch: string
+  branch: string;
+  actor: {
+    name: string;
+    avatar: string;
+  }
 }

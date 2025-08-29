@@ -15,6 +15,7 @@ export const WorkflowEntry = ({ workflow }: { workflow: IWorkflowStatusEntry }) 
 
     return "";
   }, [workflow.conclusion]);
+
   return <div
     className={`flex p-4 items-center rounded-2xl ${statusColor}`}>
     <div>
@@ -43,6 +44,11 @@ export const WorkflowEntry = ({ workflow }: { workflow: IWorkflowStatusEntry }) 
 
       <Badge variant={'outline'}>
         Branch: {workflow.branch}
+      </Badge>
+
+      <Badge variant={'outline'}>
+        <img className={'w-4 h-4'} src={workflow.actor.avatar}/>
+        {workflow.actor.name}
       </Badge>
       </div>
     </a>
