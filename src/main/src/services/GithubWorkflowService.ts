@@ -1,6 +1,5 @@
 import { IWorkflowStatusEntry } from "@shared/types/IWorkflowStatusEntry";
 import { OctokitService } from "./OctokitService";
-import { TrayService } from "./TrayService";
 
 export class GithubWorkflowService {
   private api: OctokitService;
@@ -23,7 +22,7 @@ export class GithubWorkflowService {
   public async getWorkflowRunsForRepo(owner: string, repo: string): Promise<IWorkflowStatusEntry[]> {
     const result = await this.getListOfWorkflows(owner, repo);
     const latestCommitId = result[0].head_commit!.id;
-    const runsForCommit = result.filter((run) => run.head_commit!.id === latestCommitId);
+    const runsForCommit = result.filter((run) => (run.head_commit!.id === latestCommitId || run.status !== 'completed'));
 
     return runsForCommit.map(
       (run) =>
